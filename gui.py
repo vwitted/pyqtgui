@@ -32,7 +32,6 @@ class Worker(QObject):
         while True:
             sleep(5)
             keyword=QTextCursor().selectedText()
-            keyword="help"
             if keyword != '':
                 url="https://www.googleapis.com"
                 params={'key':'AIzaSyAYXbklVtZ3YfXrwMqRxNeIgVJjcYQhD4Q','cx':'dd135e2427e2fe0e6','q':'{0} ext:py'.format(keyword)}
@@ -65,6 +64,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.textEdit)
         self.setProperty("windowOpacity", 0.5)
         self.textEdit.setMouseTracking(True)
+        self.textEdit.setFontPointSize(20)
         self.qtimer = QTime(self)
         self.qtimer.setTimerType(Qt.PreciseTimer)
         self.qtimer.start(100)

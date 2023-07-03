@@ -121,10 +121,7 @@ class MainWindow(QMainWindow):
                 oldPos = QCursor.pos()
                 while QApplication.mouseButtons() & Qt.LeftButton != 0:
                     self.move(QCursor.pos()-oldPos)
-                e.accept()
-    
-    #        
-
+                e.accept()         
     #         self.parent().setGeometry(QCursor.pos().x(),QCursor.pos().y(),self.parent().width(), self.parent().height())
     #         self.parent().show()
     #         QApplication.processEvents()

@@ -143,20 +143,11 @@ class QTime(QTimer):
         return super().timerEvent(e)
 
             
-
-
-
-
-
 class MyQApplication(QApplication):
 
     def ___init__(self,argv):
         super(MyQApplication,self).__init__(argv)
-
-   
-        
-
-
+    
     # def event(self, e):
     #     print(e.type())
     #     if (not isinstance(e,QChildEvent)) and (e.type() & QEvent.KeyPress != 0):
@@ -183,10 +174,6 @@ class MyQApplication(QApplication):
 def reverseFocusPolicy(window=None,focusPolicy=Qt.StrongFocus):
     focus=lambda f=Qt.StrongFocus: Qt.StrongFocus if f == Qt.NoFocus else Qt.NoFocus
     return (focus(focusPolicy) if not isinstance(window,MainWindow) else focus(window.focusPolicy()))
-
-    
-
-    
 
 if __name__ == '__main__':
     app = MyQApplication(sys.argv)

@@ -139,28 +139,6 @@ class MyQApplication(QApplication):
     def ___init__(self,argv):
         super(MyQApplication,self).__init__(argv)
     
-    # def event(self, e):
-    #     print(e.type())
-    #     if (not isinstance(e,QChildEvent)) and (e.type() & QEvent.KeyPress != 0):
-    #         print(type(e))
-    #         try:
-    #             key = QKeyEvent(e).key()
-    #             if (key == Qt.Key_Alt):
-    #                 if (e.type() & QEvent.MouseMove) +\
-    #                 (e.type() &  QEvent.HoverEnter) +\
-    #                 (e.type() &  QEvent.HoverMove) > 0:
-    #                     if isinstance(app.mainWin,MainWindow):
-    #                         app.mainWin.setWindowFlags(QMainWindow().windowFlags() | Qt.WindowActive | Qt.WindowStaysOnTopHint)
-    #                         app.mainWin.setFocus()
-    #                         app.mainWin.show()
-    #                         app.processEvents()
-    #                         e.ignore()
-    #                         return True        
-    #         except TypeError as ex:
-    #             ex.with_traceback(None)
-    #     return super().event(e)
-    
-
 
 def reverseFocusPolicy(window=None,focusPolicy=Qt.StrongFocus):
     focus=lambda f=Qt.StrongFocus: Qt.StrongFocus if f == Qt.NoFocus else Qt.NoFocus
@@ -171,7 +149,6 @@ if __name__ == '__main__':
     app.mainWin = MainWindow()
     app.mainWin.setMouseTracking(True)
     [w.setMouseTracking(True) for w in app.mainWin.children() if 'setMouseTracking' in w.__dir__()]
-    #[setattr(c,'',lambda e: mouseMoveEvent(e,c) and c.setMouseTracking(True)) for c in mainWin.children() if 'mouseMoveEvent' in c.__dir__()]
     app.mainWin.show()
     sys.exit(app.exec_())
 

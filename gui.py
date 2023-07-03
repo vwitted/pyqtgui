@@ -1,32 +1,22 @@
 import sys
-from asyncio import Task, base_events
-from http import HTTPStatus, client
 from json import loads
 from math import sqrt
-from operator import contains, methodcaller
 from threading import Thread
 from time import sleep
-from types import CodeType, FunctionType, TracebackType
-from typing import cast
 from urllib.parse import urlencode
 
-from PyQt5.QtCore import (QCoreApplication, QEvent, QObject,
-                          QPoint, QRect, QSize, Qt, QThread, QThreadPool,
-                          QTimer, pyqtSignal,QtSystemMsg)
-from PyQt5.QtGui import (QCursor, QHoverEvent, QIcon, QKeyEvent, QKeySequence,
-                         QMouseEvent, QTextCursor)
-from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
-                             QMessageBox, QPlainTextEdit, QTextEdit, QWidget,
-                             qApp)
+from PyQt5.QtCore import (QObject,
+                          Qt, QTimer, pyqtSignal)
+from PyQt5.QtGui import (QCursor, QTextCursor)
+from PyQt5.QtWidgets import (QApplication, QMainWindow,
+                             QTextEdit, qApp)
 from requests import *
 
 
 class Worker(QObject):
     htmlChanged = pyqtSignal(str)
-    
     def execute(self):
         Thread(target=self.getData, daemon=True).start()
-
 
     def getData(self):
         while True:
@@ -73,9 +63,7 @@ class MainWindow(QMainWindow):
         worker.htmlChanged.connect(self.textEdit.setHtml)
         worker.execute()
         self.show()
-        
 
-        
     def onUpdate(self):
         self.updatesCount +=1
         if self.istransparent:                
@@ -108,9 +96,7 @@ class MainWindow(QMainWindow):
                 self.setWindowFlags(QMainWindow().windowFlags()  | Qt.WindowStaysOnTopHint | Qt.WindowTransparentForInput)
                 self.setFocusPolicy(Qt.NoFocus)
                 self.istransparent=True
-
-   
-                
+         
     def mouseMoveEvent(self,e):
         if self.geometry().contains(QCursor.pos()) and self.mapFromGlobal(QCursor.pos()).y() < (self.height()/4):
              if QApplication.mouseButtons() == Qt.LeftButton > 0:
@@ -119,7 +105,6 @@ class MainWindow(QMainWindow):
                     self.move(QCursor.pos()-oldPos)
                 e.accept()         
 
-    
 
 class QTime(QTimer):
 

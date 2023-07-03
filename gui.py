@@ -12,13 +12,37 @@ from urllib.parse import urlencode
 
 from PyQt5.QtCore import (QCoreApplication, QEvent, QObject,
                           QPoint, QRect, QSize, Qt, QThread, QThreadPool,
-                          QTimer, QtSystemMsg)
+                          QTimer, pyqtSignal,QtSystemMsg)
 from PyQt5.QtGui import (QCursor, QHoverEvent, QIcon, QKeyEvent, QKeySequence,
                          QMouseEvent, QTextCursor)
 from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow,
                              QMessageBox, QPlainTextEdit, QTextEdit, QWidget,
                              qApp)
 from requests import *
+
+
+class Worker(QObject):
+    htmlChanged = pyqtSignal(str)
+    
+    def execute(self):
+        Thread(target=self.getData, daemon=True).start()
+
+
+    def getData(self):
+        while True:
+            sleep(5)
+            keyword=QTextCursor().selectedText()
+            keyword="help"
+            if keyword != '':
+                url="https://www.googleapis.com"
+                params={'key':'AIzaSyAYXbklVtZ3YfXrwMqRxNeIgVJjcYQhD4Q','cx':'dd135e2427e2fe0e6','q':'{0} ext:py'.format(keyword)}
+                url = url + "/customsearch/v1?" + urlencode(params)
+                req = get(url)
+                while req is None or req.status_code != 200:
+                    pass
+                html=['<a href="' + x["link"]+ '">' + x["htmlSnippet"]  + "/>" for x in dict(loads(req.text))["items"]]
+                html=("<html></body>" + "<br/><br/>".join(html) + "</body></html>").replace("\n","<br\>")  
+                self.htmlChanged.emit(html)
 
 
 class MainWindow(QMainWindow):
@@ -45,8 +69,9 @@ class MainWindow(QMainWindow):
         self.qtimer.setTimerType(Qt.PreciseTimer)
         self.qtimer.start(100)
         QApplication.processEvents()
-        self.t = Thread(target=self.getData,group=None)
-        self.t.start()
+        worker = Worker(self)
+        worker.htmlChanged.connect(self.textEdit.setHtml)
+        worker.execute()
         self.show()
         
 
@@ -84,20 +109,7 @@ class MainWindow(QMainWindow):
                 self.setFocusPolicy(Qt.NoFocus)
                 self.istransparent=True
 
-    def getData(self):
-        while True:
-            sleep(5)
-            keyword=QTextCursor().selectedText()
-            keyword="help"
-            if keyword != '':
-                url="https://www.googleapis.com"
-                params={'key':'AIzaSyAYXbklVtZ3YfXrwMqRxNeIgVJjcYQhD4Q','cx':'dd135e2427e2fe0e6','q':'{0} ext:py'.format(keyword)}
-                url = url + "/customsearch/v1?" + urlencode(params)
-                req = get(url)
-                while req is None or req.status_code != 200:
-                    pass
-                html=['<a href="' + x["link"]+ '">' + x["htmlSnippet"]  + "/>" for x in dict(loads(req.text))["items"]]
-                self.textEdit.setHtml(("<html></body>" + "<br/><br/>".join(html)+ "</body></html>").replace("\n","<br\>"))
+   
                 
 
 

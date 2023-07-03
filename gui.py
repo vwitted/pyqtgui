@@ -102,6 +102,7 @@ class MainWindow(QMainWindow):
 
 
     def enterEvent(self,e):
+        e.ignore()
         # movedown=((self.x()-self.width()) / QApplication.desktop().width()) < 0.005
         # moveleft=((self.y()+self.height()) / QApplication.desktop().height()) < 0.005
         # pX=-1
@@ -111,8 +112,6 @@ class MainWindow(QMainWindow):
         # if movedown:
         #     pY=1
         # self.move(QCursor.pos().x()+(pX*50),QCursor.pos().y() + (pY *50))
-       
-        e.ignore()
         return super(MainWindow,self).enterEvent(e)
 
     def mouseMoveEvent(self,e):

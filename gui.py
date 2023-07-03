@@ -80,8 +80,7 @@ class MainWindow(QMainWindow):
         else:
             self.setProperty('windowOpacity',0.8)
         modifiers = qApp.queryKeyboardModifiers()
-        if self.updatesCount > 10 and modifiers &\
-        Qt.AltModifier == Qt.AltModifier and self.geometry().contains(QCursor.pos()):
+        if (self.updatesCount > 10) and (modifiers == Qt.AltModifier) and self.geometry().contains(QCursor.pos()):
             self.updatesCount = 0
         
             if self.istransparent:

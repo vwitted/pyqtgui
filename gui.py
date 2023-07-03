@@ -111,21 +111,6 @@ class MainWindow(QMainWindow):
 
    
                 
-
-
-    def enterEvent(self,e):
-        e.ignore()
-        # movedown=((self.x()-self.width()) / QApplication.desktop().width()) < 0.005
-        # moveleft=((self.y()+self.height()) / QApplication.desktop().height()) < 0.005
-        # pX=-1
-        # pY=-1
-        # if moveleft:
-        #     pX=1
-        # if movedown:
-        #     pY=1
-        # self.move(QCursor.pos().x()+(pX*50),QCursor.pos().y() + (pY *50))
-        return super(MainWindow,self).enterEvent(e)
-
     def mouseMoveEvent(self,e):
         if self.geometry().contains(QCursor.pos()) and self.mapFromGlobal(QCursor.pos()).y() < (self.height()/4):
              if QApplication.mouseButtons() == Qt.LeftButton > 0:

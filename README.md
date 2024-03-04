@@ -1,6 +1,6 @@
 # pyqtgui
 
-I wanted to play around with accessibility controls within Windows. This is mostly tinkering with using Qt framework with Python.
+I wanted to play around with Qt and accessibility controls within Windows. This is mostly tinkering with using Qt framework with Python.
 
 The script creates a small window whose opacity can be changed based on the cursor position to minimise distraction.
 
